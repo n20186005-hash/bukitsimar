@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Georgia", "Times New Roman", serif;
+  --color-pine-950: #102d26;
+  --color-pine-900: #173b31;
+  --color-pine-800: #235244;
+  --color-pine-700: #2f6956;
+  --color-lake-700: #155f75;
+  --color-lake-600: #1e7890;
+  --color-lake-100: #dceff2;
+  --color-mist-50: #f7faf7;
+  --color-mist-100: #eef4ef;
+  --color-wood-500: #bd6c3f;
+  --color-wood-600: #9f5733;
+}
+
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #f7faf7; color: #183128; font-family: var(--font-sans); }
+::selection { background: #c9e4df; color: #102d26; }
+.container-site { width: min(1180px, calc(100% - 2rem)); margin-inline: auto; }
+.prose-guide p { margin-top: 0.9rem; line-height: 1.8; color: #40534b; }
+.prose-guide h2 { margin-top: 2.2rem; font-family: var(--font-display); font-size: clamp(1.6rem, 4vw, 2.4rem); color: #173b31; }
+.prose-guide h3 { margin-top: 1.5rem; font-weight: 800; color: #173b31; }
+.prose-guide ul { margin-top: 0.8rem; padding-left: 1.25rem; list-style: disc; color: #40534b; }
+.prose-guide li { margin: 0.45rem 0; line-height: 1.7; }
+.focus-ring:focus-visible { outline: 3px solid #1e7890; outline-offset: 3px; }

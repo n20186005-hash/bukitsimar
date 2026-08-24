@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-labelledby="title desc">
+<title id="title">Logo Bukit Indah Simarjarunjung Guide</title><desc id="desc">Siluet pinus dan gelombang Danau Toba.</desc>
+<g fill="none" stroke-linecap="round" stroke-linejoin="round">
+<path d="M42 93C77 78 92 68 119 42c-5 22-2 31 8 50" stroke="#173b31" stroke-width="8"/>
+<path d="M112 42 92 59m27-8-31 23m36-8-30 19" stroke="#173b31" stroke-width="6"/>
+<path d="M18 95c30-12 58-12 85 0s54 12 81 0" stroke="#1e7890" stroke-width="7"/>
+</g>
+<text x="205" y="55" font-family="Georgia,serif" font-size="31" font-weight="700" fill="#173b31">Bukit Indah</text>
+<text x="205" y="89" font-family="Arial,sans-serif" font-size="23" letter-spacing="3" font-weight="700" fill="#bd6c3f">SIMARJARUNJUNG</text>
+</svg>
