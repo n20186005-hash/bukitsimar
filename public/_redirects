@@ -1,0 +1,4 @@
+# Redirect path-level didukung; redirect domain-level (http->https, www->apex)
+# harus diatur di Cloudflare Dashboard (Always Use HTTPS + Redirect Rules).
+# Contoh path-level (aktifkan bila diperlukan):
+# /penginapan  /penginapan-sekitar/ 301

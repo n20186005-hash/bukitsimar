@@ -2,9 +2,9 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Isi URL produksi yang sebenarnya hanya pada konstanta SITE ini.
-// Biarkan undefined sebelum domain final dipilih; build tetap berjalan tanpa URL palsu.
-const SITE = undefined;
+// URL produksi yang sebenarnya. Diisi agar canonical, OG absolut, dan sitemap
+// terbit dengan benar (tanpa ini Google mudah mengindeks versi http://).
+const SITE = 'https://bukitsimar.com';
 
 export default defineConfig({
   site: SITE,

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_NAME } from '../data/site';
 
 const siteUrl = Astro.site?.toString().replace(/\/$/, '');
 const attractionUrl = siteUrl ? `${siteUrl}/` : undefined;
@@ -46,7 +47,7 @@ const faqJsonLd = {
   mainEntity: faq.map(([q,a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
 };
 ---
-<BaseLayout title="Bukit Indah Simarjarunjung — Panduan Danau Toba dari Ketinggian" description="Panduan non-profit Bukit Indah Simarjarunjung di Simalungun: panorama Danau Toba, sejarah, tiket, fasilitas, akses, parkir, kuliner, penginapan, FAQ, dan peta.">
+<BaseLayout title={`${SITE_NAME} | Tiket, Rute, Fasilitas & Spot Foto`} description="Panduan non-profit Bukit Indah Simarjarunjung di Simalungun: panorama Danau Toba, sejarah, tiket, fasilitas, akses, parkir, kuliner, penginapan, FAQ, dan peta.">
   <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)}></script>
   <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)}></script>
 
