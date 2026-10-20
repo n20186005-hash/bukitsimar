@@ -8,7 +8,7 @@ interface Props {
   image?: string;
   noindex?: boolean;
 }
-const { title, description, image = '/images/hero-simarjarunjung.jpg', noindex = false } = Astro.props;
+const { title, description, image = '/images/hero-simarjarunjung.webp', noindex = false } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
 const ogImage = Astro.site ? new URL(image, Astro.site).toString() : image;
 ---
@@ -36,28 +36,11 @@ const ogImage = Astro.site ? new URL(image, Astro.site).toString() : image;
     <link rel="icon" href="/icons/favicon-16.png" sizes="16x16" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
     <title>{title}</title>
-    <script is:inline>
-  // @ts-nocheck
-      window.__loadAnalytics = function () {
-        if (window.__gaLoaded) return;
-        window.__gaLoaded = true;
-        const s = document.createElement('script');
-        s.async = true;
-        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HXM22WWPKP';
-        document.head.appendChild(s);
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer.push(arguments)}
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', 'G-HXM22WWPKP', { anonymize_ip: true });
-      };
-      try {
-        const consent = JSON.parse(localStorage.getItem('bis-cookie-consent') || '{}');
-        if (consent.analytics === true) window.__loadAnalytics();
-      } catch (_) {}
-    </script>
+    <script is:inline src="/js/consent.js" defer></script>
   </head>
   <body>
+    <a class="skip-link" href="#main">Lewati ke isi utama</a>
     <slot />
+    <footer class="site-footer"><div class="container-site"><p>Panduan independen Bukit Indah Simarjarunjung; bukan situs pengelola atau layanan pemesanan.</p><nav aria-label="Informasi situs"><a href="/">Panduan</a><a href="/privacy/">Kebijakan Privasi</a><a href="/terms/">Ketentuan Layanan</a><a href="/cookies/">Pengaturan Cookie</a></nav></div></footer>
   </body>
 </html>

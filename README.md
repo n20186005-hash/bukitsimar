@@ -1,62 +1,23 @@
 # Panduan Bukit Indah Simarjarunjung
 
-Situs informasi wisata independen dan non-profit untuk Bukit Indah Simarjarunjung (BIS), Kabupaten Simalungun, Sumatera Utara. Antarmuka dan konten publik menggunakan Bahasa Indonesia.
+Panduan independen berbahasa Indonesia untuk BIS di Dolok Pardamean, Simalungun. Tidak berafiliasi dengan pengelola atau menyediakan pemesanan.
 
-## Teknologi
+## Pengembangan dan penerbitan
 
-- Astro + TypeScript
-- Tailwind CSS melalui `@tailwindcss/vite`
-- pnpm
-- Cloudflare Workers Static Assets melalui Wrangler
-- Tanpa basis data, login, atau CMS
+Node 24.19.0, pnpm 11.22.0. Jalankan `pnpm install --frozen-lockfile`, `pnpm check`, dan `pnpm build`. Produksi menggunakan Astro statis dan Cloudflare Worker `bukitsimar` dengan ASSETS `run_worker_first`. `pnpm deploy` membangun lalu menerbitkan; penerbitan dilakukan terpisah oleh pemilik proyek.
 
-## Menjalankan proyek
+Domain kanonis: `https://bukitsimar.com/`. Worker mengalihkan HTTP dan www dengan path/query terjaga serta mengembalikan 404 nyata dengan noindex. `dist/` merupakan hasil build yang tidak dilacak sesuai konvensi awal; semua sumber dan aset publik disimpan di Git.
 
-```bash
-corepack enable
-pnpm install --frozen-lockfile
-pnpm check
-pnpm build
-```
+## Halaman dan informasi
 
-Untuk pengembangan lokal:
+Rute yang dipertahankan: `/`, `/privacy/`, `/terms/`, `/cookies/`, serta halaman kesalahan. Hanya halaman utama masuk sitemap. Semua halaman memiliki judul, canonical dan alternate bahasa Indonesia. Tidak ada bahasa tambahan.
 
-```bash
-pnpm dev
-```
+Pemeriksaan editorial 20 Oktober 2026: lokasi dan snapshot Maps dibedakan dari jadwal pengelola. Tarif dan jam terkini belum terverifikasi. Materi Indonesia.travel dipakai untuk konteks titik pandang Danau Toba dan alamat kawasan, bukan jaminan layanan, cuaca atau operasi spot foto. Tidak ada harga, jam mingguan, rating atau penawaran yang diserialisasi sebagai schema.
 
-## Domain / `site`
+## Privasi
 
-Domain produksi hanya diatur pada konstanta `SITE` di `astro.config.mjs`. Selama belum ada domain final, biarkan `SITE = undefined`.
+Google Analytics hanya dimuat setelah pilihan eksplisit melalui `/cookies/`. Kunci baru `bukitsimar_cookie_preferences` tidak mengimpor izin lama. Penarikan izin menonaktifkan analitik segera; kegagalan penulisan permanen memakai veto sessionStorage jika tersedia dan pesan cakupan yang jujur. Tidak memuat ulang ke izin lama. Tidak ada akun, kontak, pembayaran, pemesanan atau iframe peta. Maps hanya tautan eksternal.
 
-- proyek tetap dapat dibangun tanpa domain;
-- canonical dan `og:url` dihilangkan saat tidak ada `site`;
-- `og:image` menggunakan path relatif;
-- integrasi `@astrojs/sitemap` hanya diaktifkan ketika `site` sudah diisi;
-- tidak ada domain contoh yang disisipkan sebagai fallback.
+## Foto
 
-Setelah domain tersedia, ubah hanya:
-
-Tetapkan konstanta `SITE` ke URL produksi yang sebenarnya setelah domain final tersedia. Jangan menambahkan URL contoh atau domain sementara.
-
-lalu jalankan build kembali.
-
-## Cloudflare Worker
-
-`wrangler.jsonc` menyajikan direktori `./dist` sebagai Static Assets. Setelah login Cloudflare dan menyesuaikan nama Worker bila perlu:
-
-```bash
-pnpm deploy
-```
-
-## Privasi dan analitik
-
-GA4 `G-HXM22WWPKP` tidak dimuat otomatis. Skrip Google Analytics baru dimuat setelah pengguna mengaktifkan Cookie analitik pada `/cookies/`. Pilihan disimpan di `localStorage` dengan kunci `bis-cookie-consent`.
-
-Google Maps adalah embed pihak ketiga terpisah dan menggunakan locale Indonesia (`id`).
-
-## Sumber editorial utama
-
-Konten diringkas dan dibandingkan dari sumber publik pemerintah/pariwisata, sumber ilmiah, UNESCO, data peta publik, dan dokumentasi visual berlisensi. Informasi yang mudah berubah—tarif, jam buka, kondisi jalan, fasilitas, rating—ditandai agar diperiksa kembali sebelum perjalanan.
-
-Rincian hak gambar ada di [`PHOTO-CREDITS.md`](./PHOTO-CREDITS.md).
+Lihat [PHOTO-CREDITS.md](PHOTO-CREDITS.md). Foto lama tidak membuktikan kondisi atau operasi saat ini; foto dari Samosir diberi label konteks lokasi berbeda. Atribusi dan tautan lisensi terlihat pada halaman.
