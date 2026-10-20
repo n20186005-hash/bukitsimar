@@ -1,185 +1,40 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_NAME } from '../data/site';
-
-const siteUrl = Astro.site?.toString().replace(/\/$/, '');
-const attractionUrl = siteUrl ? `${siteUrl}/` : undefined;
-const imageUrl = siteUrl ? `${siteUrl}/images/hero-simarjarunjung.jpg` : '/images/hero-simarjarunjung.jpg';
-
 const faq = [
-  ['Berapa harga tiket masuk Bukit Indah Simarjarunjung?', 'SISPAR​​NAS mencantumkan tiket masuk Rp20.000, sementara materi Indonesia.travel mencatat skema biaya kendaraan yang berbeda. Karena tarif masuk, parkir, paket foto, dan wahana tambahan dapat berubah, anggap angka daring sebagai acuan awal dan konfirmasi seluruh biaya di loket sebelum membeli.'],
-  ['Kapan waktu terbaik datang?', 'Pagi hari biasanya memberi udara lebih sejuk dan peluang pandangan lebih jernih. Sore hari menarik untuk cahaya lembut, tetapi kabut dan hujan pegunungan dapat datang cepat.'],
-  ['Berapa lama waktu kunjungan yang ideal?', 'Sekitar 1,5–3 jam cukup untuk menikmati panorama, berjalan santai, berfoto, beristirahat, dan menggunakan fasilitas dasar. Tambahkan waktu bila datang bersama keluarga atau saat akhir pekan.'],
-  ['Apakah ada toilet dan tempat parkir?', 'SISPAR​​NAS mencatat toilet umum, parkir, layanan makanan/minuman, pusat informasi, tempat ibadah, dan jalur evakuasi. Kondisi operasional di lapangan dapat berubah, jadi tetap periksa saat tiba.'],
-  ['Apakah kendaraan umum langsung menuju lokasi?', 'Tidak ada jaringan angkutan massal langsung yang dapat diandalkan sampai pintu masuk. Umumnya perjalanan diteruskan dari Pematangsiantar, Parapat, Tigaras, atau koridor jalan utama dengan kendaraan sewaan, taksi, ojek, atau kendaraan pribadi.'],
-  ['Apakah cocok untuk anak-anak dan lansia?', 'Area pandang dapat dinikmati keluarga, tetapi beberapa jalur dan spot foto berada di lereng atau struktur bertingkat. Pendampingan, alas kaki antiselip, dan kehati-hatian diperlukan, terutama setelah hujan.']
+ ['Di mana Bukit Indah Simarjarunjung berada?', 'Listing Google Maps yang diperiksa 20 Oktober 2026 menempatkan Bukit Indah Simarjarunjung di Butu Bayu Pane Raja, Dolok Pardamean, Kabupaten Simalungun, Sumatera Utara 21163. Pin lokasi: 2.8137612, 98.781632. Pastikan pintu masuk yang dimaksud sebelum mengikuti navigasi.'],
+ ['Apakah Bukit Indah Simarjarunjung memiliki jam buka yang terverifikasi?', 'Belum. Listing Google Maps yang diperiksa 20 Oktober 2026 tidak menampilkan jam operasional. Jam sebuah kafe di kawasan ini tidak berlaku otomatis untuk seluruh atraksi. Konfirmasi hari kunjungan, waktu masuk terakhir, dan akses pagi atau sore kepada petugas sebelum berangkat.'],
+ ['Berapa harga tiket masuk dan parkir?', 'Tarif terkini belum terverifikasi. Tanyakan tiket masuk, parkir, serta biaya setiap wahana atau spot foto secara terpisah sebelum membayar. Jangan menganggap satu tiket mencakup seluruh tempat bernama Simarjarunjung.'],
+ ['Apakah panorama Danau Toba selalu terlihat?', 'Tidak ada jaminan pandangan jernih. Indonesia.travel menggambarkan Simarjarunjung sebagai titik pandang Danau Toba, tetapi awan, kabut, hujan, dan kondisi setempat dapat membatasi pandangan. Foto lama bukan perkiraan cuaca atau kondisi hari kunjungan.'],
+ ['Apakah fasilitas dan spot foto pasti dapat digunakan?', 'Ketersediaan toilet, parkir, makanan, tempat ibadah, akses tanpa anak tangga, dan struktur foto belum dikonfirmasi untuk hari kunjungan Anda. Tanyakan kebutuhan khusus terlebih dahulu, ikuti pembatas, dan jangan menggunakan struktur yang ditutup atau dinyatakan tidak layak.'],
+ ['Bagaimana merencanakan perjalanan dan kunjungan sekitar?', 'Gunakan pin tempat yang tepat dan pastikan rute, kondisi jalan, titik turun, serta perjalanan pulang dengan penyedia transportasi. Kawasan Danau Toba dan tempat lain yang memakai nama Simarjarunjung bukan satu pintu masuk atau paket kunjungan; periksa lokasi dan ketentuannya masing-masing.']
 ];
-
-const attractionJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': ['TouristAttraction', 'LocalBusiness'],
-  name: 'Bukit Indah Simarjarunjung',
-  alternateName: 'BIS',
-  description: 'Titik pandang di perbukitan Simalungun dengan panorama Danau Toba, hutan pinus, dan wahana foto.',
-  ...(attractionUrl ? { url: attractionUrl } : {}),
-  image: [imageUrl],
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Jl. Simarjarunjung, Butu Bayu Pane Raja',
-    addressLocality: 'Dolok Pardamean',
-    addressRegion: 'Sumatera Utara',
-    postalCode: '21163',
-    addressCountry: 'ID'
-  },
-  geo: { '@type': 'GeoCoordinates', latitude: 2.813761197151258, longitude: 98.77905171243845 },
-  priceRange: 'Rp',
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.3', reviewCount: '7300', bestRating: '5' },
-  openingHoursSpecification: {
-    '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
-    opens: '07:00',
-    closes: '19:00',
-    description: 'Referensi publik Indonesia.travel; jam operasional dapat berubah, konfirmasi sebelum berangkat.'
-  }
+const attraction = {
+ '@context':'https://schema.org', '@type':'TouristAttraction', name:'Bukit Indah Simarjarunjung', alternateName:'BIS',
+ description:'Titik pandang kawasan Danau Toba di Dolok Pardamean, Kabupaten Simalungun, Sumatera Utara.',
+ address:{'@type':'PostalAddress',streetAddress:'Butu Bayu Pane Raja',addressLocality:'Dolok Pardamean, Simalungun',addressRegion:'Sumatera Utara',postalCode:'21163',addressCountry:'ID'},
+ geo:{'@type':'GeoCoordinates',latitude:2.8137612,longitude:98.781632},
+ hasMap:'https://maps.app.goo.gl/jebnSVTqB8zqffgg7'
 };
-const faqJsonLd = {
-  '@context': 'https://schema.org', '@type': 'FAQPage',
-  mainEntity: faq.map(([q,a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } }))
-};
+const faqSchema = {'@context':'https://schema.org','@type':'FAQPage',mainEntity:faq.map(([q,a])=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))};
 ---
-<BaseLayout title={`${SITE_NAME} | Tiket, Rute, Fasilitas & Spot Foto`} description="Panduan non-profit Bukit Indah Simarjarunjung di Simalungun: panorama Danau Toba, sejarah, tiket, fasilitas, akses, parkir, kuliner, penginapan, FAQ, dan peta.">
-  <script type="application/ld+json" set:html={JSON.stringify(attractionJsonLd)}></script>
-  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)}></script>
-
-  <header class="absolute inset-x-0 top-0 z-30 border-b border-white/15 bg-pine-950/25 backdrop-blur-md">
-    <div class="container-site flex h-20 items-center justify-between gap-6">
-      <a href="#atas" class="focus-ring shrink-0 rounded-lg" aria-label="Beranda Bukit Indah Simarjarunjung"><img src="/logo.svg" alt="Bukit Indah Simarjarunjung" class="h-12 w-auto brightness-0 invert" /></a>
-      <nav class="hidden gap-7 text-sm font-semibold text-white/90 lg:flex" aria-label="Navigasi utama">
-        <a href="#cerita" class="hover:text-white">Cerita</a><a href="#rencana" class="hover:text-white">Rencana kunjungan</a><a href="#transportasi" class="hover:text-white">Transportasi</a><a href="#fasilitas" class="hover:text-white">Fasilitas</a><a href="#sekitar" class="hover:text-white">Sekitar</a><a href="#faq" class="hover:text-white">FAQ</a>
-      </nav>
-      <a href="#peta" class="focus-ring rounded-full bg-white px-5 py-2.5 text-sm font-bold text-pine-900 shadow-lg">Lihat peta</a>
-    </div>
-  </header>
-
-  <main id="atas">
-    <section class="relative min-h-[760px] overflow-hidden bg-pine-950 text-white">
-      <img src="/images/hero-simarjarunjung.jpg" alt="Pemandangan Bukit Simarjarunjung dengan Danau Toba dan Pulau Samosir di latar" class="absolute inset-0 h-full w-full object-cover" fetchpriority="high" />
-      <div class="absolute inset-0 bg-gradient-to-b from-pine-950/50 via-pine-950/35 to-pine-950/90"></div>
-      <div class="container-site relative flex min-h-[760px] items-end pb-16 pt-32">
-        <div class="max-w-4xl">
-          <div class="mb-5 flex flex-wrap items-center gap-3 text-sm font-semibold"><span class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur">Dolok Pardamean · Simalungun</span><span class="rounded-full border border-white/30 bg-white/10 px-4 py-2 backdrop-blur">Danau Toba dari ketinggian</span></div>
-          <p class="mb-4 text-sm font-bold uppercase tracking-[.28em] text-lake-100">Panduan independen non-profit</p>
-          <h1 class="font-display text-5xl font-bold leading-[1.03] sm:text-6xl lg:text-8xl">Bukit Indah<br />Simarjarunjung</h1>
-          <p class="mt-6 max-w-2xl text-lg leading-8 text-white/85 sm:text-xl">Pinus, udara pegunungan, dan bentang kaldera Toba dalam satu garis pandang. Panduan ini membantu Anda memahami tempatnya — bukan sekadar mencari spot foto.</p>
-          <div class="mt-8 flex flex-wrap gap-4"><a href="#rencana" class="focus-ring rounded-full bg-wood-500 px-6 py-3.5 font-bold text-white hover:bg-wood-600">Rencanakan kunjungan</a><a href="#cerita" class="focus-ring rounded-full border border-white/35 bg-white/10 px-6 py-3.5 font-bold text-white backdrop-blur hover:bg-white/20">Kenali latar tempat</a></div>
-        </div>
-      </div>
-      <p class="absolute bottom-4 right-4 z-10 max-w-[min(90vw,34rem)] rounded-lg bg-pine-950/65 px-3 py-2 text-[11px] leading-4 text-white/80 backdrop-blur">Foto: MULAI ADIL SARAGIH / Wikimedia Commons · CC BY-SA 4.0 · ditampilkan dengan pemotongan responsif.</p>
-    </section>
-
-    <section class="border-b border-pine-900/10 bg-white py-7">
-      <div class="container-site grid gap-5 text-sm sm:grid-cols-2 lg:grid-cols-4">
-        <div><p class="font-bold text-pine-900">Alamat</p><p class="mt-1 text-slate-600">Jl. Simarjarunjung, Butu Bayu Pane Raja</p></div>
-        <div><p class="font-bold text-pine-900">Karakter</p><p class="mt-1 text-slate-600">Titik pandang, pinus, wahana foto</p></div>
-        <div><p class="font-bold text-pine-900">Rating publik</p><p class="mt-1 text-slate-600">Sekitar 4,3/5 di Google · dapat berubah</p></div>
-        <div><p class="font-bold text-pine-900">Jam kunjungan</p><p class="mt-1 text-slate-600">Referensi 07.00–19.00 WIB · cek kembali sebelum berangkat</p></div>
-      </div>
-    </section>
-
-    <section id="cerita" class="py-20 lg:py-28">
-      <div class="container-site grid items-start gap-12 lg:grid-cols-[.9fr_1.1fr]">
-        <div class="lg:sticky lg:top-24">
-          <p class="text-sm font-bold uppercase tracking-[.25em] text-wood-600">Membaca lanskap</p>
-          <h2 class="mt-4 font-display text-4xl font-bold leading-tight text-pine-900 sm:text-5xl">Lebih dari sebuah panggung foto</h2>
-          <img src="/images/danau-toba-samosir.jpg" alt="Bentang Danau Toba dilihat dari Pulau Samosir sebagai konteks lanskap Kaldera Toba" class="mt-8 aspect-[4/3] w-full rounded-[2rem] object-cover shadow-xl" loading="lazy" />
-          <p class="mt-3 text-xs leading-5 text-slate-500">Konteks lanskap Danau Toba. Foto: PL 05 SIGIT / Wikimedia Commons · CC BY-SA 4.0 · ditampilkan dengan pemotongan responsif.</p>
-        </div>
-        <div class="space-y-9 text-[17px] leading-8 text-slate-600">
-          <div><h3 class="font-display text-3xl font-bold text-pine-900">Dari tempat singgah menjadi destinasi</h3><p class="mt-3">Kajian akademik Universitas Negeri Medan tentang perkembangan BIS periode 2014–2018 mencatat perubahan fisik yang nyata: bertambahnya spot foto, jalan, fasilitas makan, WC, penginapan, dan arus wisatawan. Basis data resmi SISPAR​​NAS mencatat tahun mulai beroperasi 2016. Jadi, perkembangan BIS lebih tepat dipahami sebagai transformasi lanskap perbukitan dan tempat persinggahan menjadi atraksi wisata yang dikelola.</p></div>
-          <div><h3 class="font-display text-3xl font-bold text-pine-900">Danau yang dibentuk geologi raksasa</h3><p class="mt-3">Panorama utama BIS adalah Kaldera Toba. UNESCO menjelaskan kaldera ini terbentuk oleh supererupsi sekitar 74–75 ribu tahun lalu. Danau Toba kemudian mengisi cekungan kaldera, sementara Pulau Samosir muncul di tengah sistem geologi yang sama. UNESCO menetapkan Toba Caldera sebagai UNESCO Global Geopark pada 2020.</p></div>
-          <div class="rounded-[2rem] bg-pine-900 p-8 text-white"><p class="text-sm font-bold uppercase tracking-[.22em] text-lake-100">Cerita rakyat & ilmu bumi</p><h3 class="mt-3 font-display text-3xl font-bold">Dua cara masyarakat memahami Danau Toba</h3><p class="mt-4 text-white/80">Legenda Danau Toba — tentang janji, keluarga, dan terbentuknya danau — hidup sebagai cerita budaya di kawasan Batak. Ia penting sebagai warisan tutur, tetapi bukan penjelasan ilmiah asal-usul kaldera. Situs ini sengaja menempatkan folklor dan geologi berdampingan agar keduanya tidak tercampur.</p></div>
-          <div><h3 class="font-display text-3xl font-bold text-pine-900">Konteks budaya Simalungun</h3><p class="mt-3">Simarjarunjung berada di Kabupaten Simalungun, salah satu wilayah budaya Batak di sekitar Kaldera Toba. UNESCO juga menekankan bahwa lanskap Toba bukan hanya fenomena geologi, tetapi ruang hidup masyarakat Batak dengan tradisi, arsitektur, pangan, dan kerajinan yang berakar pada lingkungan danau dan pegunungan.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="rencana" class="bg-pine-950 py-20 text-white lg:py-28">
-      <div class="container-site">
-        <div class="max-w-3xl"><p class="text-sm font-bold uppercase tracking-[.25em] text-lake-100">Sebelum berangkat</p><h2 class="mt-4 font-display text-4xl font-bold sm:text-5xl">Rencana kunjungan yang realistis</h2><p class="mt-5 text-lg leading-8 text-white/75">Daerah perbukitan berarti cuaca berubah cepat, jalan berkelok, dan sebagian fasilitas dapat berbeda dari informasi daring. Sisakan ruang untuk kondisi lapangan.</p></div>
-        <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <article class="rounded-[2rem] border border-white/12 bg-white/6 p-7"><span class="text-3xl">🎟️</span><h3 class="mt-5 text-xl font-bold">Tiket / biaya</h3><p class="mt-3 leading-7 text-white/70">SISPAR​​NAS mencantumkan tiket masuk Rp20.000. Indonesia.travel memuat skema biaya kendaraan yang berbeda. Beberapa wahana/spot foto juga dapat berbiaya terpisah; konfirmasi tiket, parkir, dan wahana di loket.</p></article>
-          <article class="rounded-[2rem] border border-white/12 bg-white/6 p-7"><span class="text-3xl">🕘</span><h3 class="mt-5 text-xl font-bold">Jam & waktu terbaik</h3><p class="mt-3 leading-7 text-white/70">Referensi publik Indonesia.travel mencantumkan 07.00–19.00 setiap hari. Pagi biasanya lebih sejuk dan berpeluang lebih jernih; sore memberi cahaya lembut. Jam dapat berubah, terutama saat kondisi cuaca atau operasional khusus.</p></article>
-          <article class="rounded-[2rem] border border-white/12 bg-white/6 p-7"><span class="text-3xl">⏱️</span><h3 class="mt-5 text-xl font-bold">Durasi ideal</h3><p class="mt-3 leading-7 text-white/70">1,5–3 jam untuk panorama, foto, rehat, dan fasilitas dasar. Akhir pekan atau rombongan keluarga biasanya perlu waktu lebih lama.</p></article>
-          <article class="rounded-[2rem] border border-white/12 bg-white/6 p-7"><span class="text-3xl">🌦️</span><h3 class="mt-5 text-xl font-bold">Bawa</h3><p class="mt-3 leading-7 text-white/70">Jaket tipis/antihujan, alas kaki berdaya cengkeram, air minum, obat pribadi, dan pelindung perangkat elektronik dari hujan/kabut.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="transportasi" class="py-20 lg:py-28">
-      <div class="container-site">
-        <div class="grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
-          <div><p class="text-sm font-bold uppercase tracking-[.25em] text-wood-600">Transportasi rinci</p><h2 class="mt-4 font-display text-4xl font-bold text-pine-900 sm:text-5xl">Datang ke Simarjarunjung</h2><p class="mt-5 leading-8 text-slate-600">Tidak ada kereta atau bus kota yang berhenti tepat di pintu atraksi. Rute praktis biasanya menggabungkan transportasi antarkota dengan kendaraan jalan raya untuk tahap terakhir.</p></div>
-          <div class="grid gap-5 sm:grid-cols-2">
-            <article class="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-pine-900/10"><p class="text-sm font-bold text-lake-700">✈ DARI BANDARA</p><h3 class="mt-3 text-xl font-bold text-pine-900">Kualanamu / Sisingamangaraja XII</h3><p class="mt-3 leading-7 text-slate-600">Dari Bandara Internasional Kualanamu, lanjutkan ke Medan/Pematangsiantar lalu koridor menuju Tiga Runggu–Dolok Pardamean. Alternatif dari Bandara Sisingamangaraja XII dapat diarahkan melalui kawasan Danau Toba, lalu dilanjutkan kendaraan darat. Waktu tempuh sangat dipengaruhi lalu lintas dan kondisi jalan.</p></article>
-            <article class="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-pine-900/10"><p class="text-sm font-bold text-lake-700">🚌 ANGKUTAN UMUM</p><h3 class="mt-3 text-xl font-bold text-pine-900">Bus / travel + sambungan lokal</h3><p class="mt-3 leading-7 text-slate-600">Cari bus atau travel antarkota menuju Pematangsiantar, Parapat, Saribudolok, atau koridor terdekat. Tahap terakhir biasanya perlu minibus lokal, ojek, taksi, atau kendaraan sewaan. Pastikan titik turun dan jadwal perjalanan pulang sebelum berangkat.</p></article>
-            <article class="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-pine-900/10"><p class="text-sm font-bold text-lake-700">🚕 TAKSI / SEWA MOBIL</p><h3 class="mt-3 text-xl font-bold text-pine-900">Paling sederhana untuk rombongan</h3><p class="mt-3 leading-7 text-slate-600">Taksi antarkota atau mobil dengan pengemudi mengurangi kebutuhan berganti kendaraan, terutama bagi keluarga. Sepakati rute, biaya, waktu tunggu, dan perjalanan pulang sejak awal. Tidak ada rekomendasi operator tertentu di situs ini.</p></article>
-            <article class="rounded-[2rem] bg-white p-7 shadow-sm ring-1 ring-pine-900/10"><p class="text-sm font-bold text-lake-700">🏍 KENDARAAN PRIBADI</p><h3 class="mt-3 text-xl font-bold text-pine-900">Jalan pegunungan berkelok</h3><p class="mt-3 leading-7 text-slate-600">Gunakan kendaraan dalam kondisi baik; periksa rem, ban, bahan bakar, dan lampu. Berkendaralah lebih pelan saat kabut atau hujan. Jangan berhenti di tikungan hanya untuk mengambil foto panorama.</p></article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="fasilitas" class="bg-mist-100 py-20 lg:py-28">
-      <div class="container-site">
-        <div class="max-w-3xl"><p class="text-sm font-bold uppercase tracking-[.25em] text-wood-600">Kebutuhan praktis</p><h2 class="mt-4 font-display text-4xl font-bold text-pine-900 sm:text-5xl">Fasilitas yang paling sering ditanyakan</h2><p class="mt-5 leading-8 text-slate-600">Status “tersedia” di bawah merujuk pada data atraksi SISPAR​​NAS dan kajian fasilitas; tingkat layanan, jam buka, dan kondisi fisik tetap perlu dilihat langsung di lokasi.</p></div>
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {[
-            ['WC / toilet','Tersedia','Toilet umum tercatat di SISPAR​​NAS. Bawa tisu dan perlengkapan pribadi sebagai cadangan.'],
-            ['Parkir','Tersedia','Area parkir tercatat; kapasitas saat hari ramai dapat terbatas. Ikuti arahan petugas.'],
-            ['Makanan & minuman','Tersedia','Cari kantin/warung lokal berdasarkan kebutuhan, tanpa preferensi merek atau usaha tertentu.'],
-            ['Penginapan','Di kawasan sekitar','Pilihan homestay, penginapan keluarga, dan akomodasi wisata tersedia di koridor Danau Toba. Bandingkan lokasi, akses, dan kebijakan.'],
-            ['Minimarket / kebutuhan','Di pusat permukiman','Belanja air, obat ringan, dan kebutuhan perjalanan sebelum memasuki ruas pegunungan.'],
-            ['BBM','Di jalur utama','Isi bahan bakar sebelum naik ke kawasan bukit. Jangan mengandalkan pom bensin tepat di area atraksi.'],
-            ['Pengisian EV','Belum pasti','Jangan mengandalkan charger EV di lokasi. Rencanakan pengisian di kota atau simpul perjalanan yang lebih besar.'],
-            ['Tempat ibadah','Tersedia','SISPAR​​NAS mencatat fasilitas tempat ibadah di kawasan atraksi.'],
-            ['Pusat informasi','Tersedia','Tercatat ada pusat informasi; tanyakan kondisi jalur dan fasilitas saat tiba.'],
-            ['Akses disabilitas','Terbatas / konfirmasi','Area lereng dan spot foto bertingkat dapat menjadi hambatan. Data SISPAR​​NAS mencatat toilet khusus disabilitas/lansia, tetapi akses menyeluruh perlu dikonfirmasi.'],
-            ['Sinyal & pembayaran','Bervariasi','Siapkan uang tunai secukupnya; kualitas sinyal dan metode pembayaran non-tunai dapat berbeda.'],
-            ['Keselamatan','Jalur evakuasi tercatat','Waspadai permukaan basah, tepian, struktur foto, angin, dan kabut. Patuhi pembatas dan instruksi petugas.']
-          ].map(([t,s,d]) => <article class="rounded-[1.7rem] bg-white p-6 ring-1 ring-pine-900/8"><p class="text-xs font-extrabold uppercase tracking-[.15em] text-lake-700">{s}</p><h3 class="mt-2 text-lg font-bold text-pine-900">{t}</h3><p class="mt-3 text-sm leading-6 text-slate-600">{d}</p></article>)}
-        </div>
-      </div>
-    </section>
-
-    <section id="sekitar" class="py-20 lg:py-28">
-      <div class="container-site">
-        <div class="grid gap-10 lg:grid-cols-2">
-          <div class="rounded-[2rem] bg-lake-700 p-8 text-white lg:p-10"><p class="text-sm font-bold uppercase tracking-[.2em] text-lake-100">Kuliner sekitar</p><h2 class="mt-3 font-display text-4xl font-bold">Makan tanpa rekomendasi komersial</h2><p class="mt-5 leading-8 text-white/80">Sebagai panduan non-profit, kami tidak menunjuk restoran atau warung tertentu. Pilih berdasarkan kebersihan, harga yang dipasang jelas, kebutuhan diet, dan jarak dari rute Anda.</p><ul class="mt-6 space-y-3 text-white/85"><li>• Warung/kantin untuk makanan hangat dan minuman panas.</li><li>• Rumah makan keluarga di koridor jalan utama.</li><li>• Kuliner lokal Batak/Simalungun; tanyakan bahan bila memiliki alergi atau pantangan.</li><li>• Bekal sederhana sebelum masuk kawasan pegunungan untuk berjaga-jaga.</li></ul></div>
-          <div class="rounded-[2rem] bg-pine-900 p-8 text-white lg:p-10"><p class="text-sm font-bold uppercase tracking-[.2em] text-lake-100">Daya tarik sekitar</p><h2 class="mt-3 font-display text-4xl font-bold">Rangkai perjalanan Danau Toba</h2><p class="mt-5 leading-8 text-white/80">Alih-alih mempromosikan operator, pertimbangkan kategori destinasi yang melengkapi pengalaman BIS.</p><ul class="mt-6 space-y-3 text-white/85"><li>• Titik pandang dan koridor panorama Simarjarunjung.</li><li>• Kawasan tepi Danau Toba dan pelabuhan penyeberangan.</li><li>• Desa budaya, museum, atau rumah adat untuk konteks Batak.</li><li>• Geosite Kaldera Toba dan ruang interpretasi geologi.</li><li>• Ruang alam terbuka untuk berjalan santai dan fotografi lanskap.</li></ul></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="peta" class="bg-white py-20 lg:py-28">
-      <div class="container-site grid gap-8 lg:grid-cols-[.55fr_1.45fr]">
-        <div><p class="text-sm font-bold uppercase tracking-[.25em] text-wood-600">Lokasi</p><h2 class="mt-4 font-display text-4xl font-bold text-pine-900">Peta Bukit Indah Simarjarunjung</h2><p class="mt-5 leading-8 text-slate-600">Koordinat peta sekitar 2.813761, 98.779052. Gunakan peta untuk orientasi, tetapi ikuti rambu dan kondisi jalan terkini ketika mendekati lokasi.</p><a href="https://maps.app.goo.gl/jebnSVTqB8zqffgg7" rel="noopener noreferrer" class="mt-6 inline-flex rounded-full bg-pine-900 px-6 py-3 font-bold text-white">Buka di Google Maps</a></div>
-        <div class="overflow-hidden rounded-[2rem] shadow-xl ring-1 ring-pine-900/10"><iframe title="Peta Bukit Indah Simarjarunjung" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6890.743171456379!2d98.77905171243845!3d2.813761197151258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3031be7326c429cd%3A0x934e4a3527a57ab5!2sBukit%20Indah%20Simarjarunjung!5e1!3m2!1sid!2sid!4v1787144786616!5m2!1sid!2sid" width="100%" height="520" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-      </div>
-    </section>
-
-    <section id="faq" class="bg-mist-100 py-20 lg:py-28">
-      <div class="container-site"><div class="max-w-3xl"><p class="text-sm font-bold uppercase tracking-[.25em] text-wood-600">FAQ</p><h2 class="mt-4 font-display text-4xl font-bold text-pine-900 sm:text-5xl">Pertanyaan sebelum berangkat</h2></div>
-        <div class="mt-10 grid gap-4 lg:grid-cols-2">{faq.map(([q,a]) => <details class="group rounded-[1.5rem] bg-white p-6 ring-1 ring-pine-900/10"><summary class="cursor-pointer list-none pr-6 text-lg font-bold text-pine-900">{q}</summary><p class="mt-4 leading-7 text-slate-600">{a}</p></details>)}</div>
-      </div>
-    </section>
-
-    <section class="py-20"><div class="container-site rounded-[2rem] border border-amber-300 bg-amber-50 p-8 lg:p-10"><p class="text-sm font-bold uppercase tracking-[.2em] text-amber-800">Catatan editorial</p><h2 class="mt-3 font-display text-3xl font-bold text-pine-900">Apa yang kami verifikasi, dan apa yang mudah berubah</h2><p class="mt-4 max-w-4xl leading-8 text-slate-700">Alamat, tahun mulai beroperasi, kategori fasilitas, dan keberadaan atraksi dirujuk silang dengan SISPAR​​NAS Kementerian Pariwisata serta sumber akademik. Rating Google, tarif, jam layanan, kondisi wahana, akses jalan, dan ketersediaan fasilitas adalah informasi yang dapat berubah. Untuk keputusan penting, periksa kembali melalui kanal resmi pemerintah/atraksi atau kondisi di lokasi sebelum berangkat.</p></div></section>
-  </main>
-
-  <footer class="bg-pine-950 py-14 text-white/75">
-    <div class="container-site grid gap-10 lg:grid-cols-[1fr_.8fr]">
-      <div><img src="/logo.svg" alt="Bukit Indah Simarjarunjung" class="h-12 w-auto brightness-0 invert" /><p class="mt-5 max-w-2xl leading-7">Situs ini merupakan proyek panduan informasi wisata independen dan non-profit, tidak berafiliasi dengan instansi pemerintah, pengelola resmi, atau organisasi resmi mana pun.</p><p class="mt-4 max-w-3xl text-sm leading-6">Informasi destinasi dirujuk dan diperbandingkan dengan materi publik Pemerintah Kabupaten Simalungun / Dinas Pariwisata dan Kebudayaan Kabupaten Simalungun, Dinas Kebudayaan, Pariwisata dan Ekonomi Kreatif Provinsi Sumatera Utara, Kementerian Pariwisata Republik Indonesia, serta sumber ilmiah yang relevan. Tidak memuat rekomendasi komersial berbayar.</p><p class="mt-4 text-sm">Hak gambar: seluruh hak cipta foto tetap dimiliki fotografer atau pemegang hak aslinya. Foto yang digunakan di situs ini bersumber dari Wikimedia Commons dan dicantumkan sesuai lisensi CC BY-SA 4.0; rincian atribusi tersedia di berkas PHOTO-CREDITS.md.</p><p class="mt-5 text-sm font-semibold text-white">© 2026 Panduan Bukit Indah Simarjarunjung. Hak cipta dilindungi.</p></div>
-      <div class="lg:text-right"><p class="font-bold text-white">Informasi & kebijakan</p><div class="mt-4 flex flex-col gap-3 lg:items-end"><a href="/privacy/" class="hover:text-white">Kebijakan Privasi</a><a href="/terms/" class="hover:text-white">Ketentuan Layanan</a><a href="/cookies/" class="hover:text-white">Pengaturan Cookie</a></div><p class="mt-7 text-xs leading-5 text-white/50">Panduan independen · bukan situs resmi Bukit Indah Simarjarunjung.</p></div>
-    </div>
-  </footer>
+<BaseLayout title="Bukit Indah Simarjarunjung: Lokasi, Peta & Panduan Kunjungan" description="Panduan independen Bukit Indah Simarjarunjung di Simalungun: lokasi dekat Danau Toba, peta, batas informasi jam dan tiket, persiapan serta sumber foto.">
+ <script type="application/ld+json" set:html={JSON.stringify(attraction)}></script>
+ <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
+ <header class="site-header"><div class="container-site"><a href="/" class="brand">Bukit Indah Simarjarunjung</a><nav aria-label="Navigasi utama"><a href="#cerita">Tentang</a><a href="#rencana">Jam & tiket</a><a href="#transportasi">Transportasi</a><a href="#fasilitas">Fasilitas</a><a href="#sekitar">Sekitar</a><a href="#peta">Peta</a><a href="#faq">FAQ</a></nav></div></header>
+ <main id="main">
+  <section class="hero">
+   <img src="/images/hero-simarjarunjung.webp" alt="Pengunjung pada struktur foto di dekat pohon dengan bentang danau dan perbukitan dalam foto Simarjarunjung tahun 2021" width="1237" height="781" fetchpriority="high" />
+   <div class="hero-shade"></div><div class="container-site hero-copy"><p class="eyebrow">Panduan independen · Simalungun, Sumatera Utara</p><h1>Bukit Indah<br />Simarjarunjung</h1><p>Titik pandang kawasan Danau Toba. Mulai dari lokasi yang tepat, lalu pastikan jam masuk, biaya, cuaca, dan kondisi tempat sebelum perjalanan.</p><a class="button" href="#peta">Lihat lokasi & peta</a></div>
+  </section>
+  <div class="photo-credit container-site">Foto Simarjarunjung, 20 Oktober 2021: <a href="https://commons.wikimedia.org/wiki/File:Simarjarunjung_Hill_view.jpg">MULAI ADIL SARAGIH / Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Pemotongan responsif; bukan bukti kondisi atau ketersediaan spot foto saat ini.</div>
+  <section class="summary-strip"><div class="container-site summary-grid"><div><h2>Lokasi</h2><p>Butu Bayu Pane Raja · Dolok Pardamean · Simalungun</p></div><div><h2>Jam operasional</h2><p>Belum terverifikasi; tidak ditampilkan pada listing Maps yang diperiksa.</p></div><div><h2>Catatan Maps</h2><p>4,3/5 dari 7.292 ulasan · 20 Oktober 2026. Penilaian pihak ketiga dapat berubah.</p></div></div></section>
+  <section id="cerita" class="section"><div class="container-site content-grid"><div><p class="eyebrow">Mengenali tempat</p><h2>Simarjarunjung dan panorama Danau Toba</h2><p>Materi pariwisata nasional Indonesia.travel memperkenalkan Simarjarunjung sebagai tempat melihat Danau Toba dan mencantumkan alamat Butu Bayu Pane Raja, Dolok Pardamean, Simalungun. Panduan ini membahas Bukit Indah Simarjarunjung, bukan seluruh tempat wisata di sekitar danau.</p><p>Foto lanskap membantu mengenali suasana kawasan, tetapi tidak memastikan cuaca, kondisi bangunan, atau akses yang masih berlaku. Pandangan danau bergantung pada kondisi setempat; jangan merencanakan perjalanan dengan jaminan langit cerah atau matahari terbenam yang terlihat.</p></div><figure><img src="/images/danau-toba-samosir.webp" alt="Danau dan perbukitan dilihat dari sisi Pulau Samosir dalam foto tahun 2017" width="3648" height="2432" loading="lazy" /><figcaption>Danau Toba dari Samosir, 22 April 2017: <a href="https://commons.wikimedia.org/wiki/File:Danau_Toba_dari_Samosir.jpg">PL 05 SIGIT / Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Foto konteks dari lokasi berbeda, bukan pemandangan yang difoto dari BIS. Pemotongan responsif.</figcaption></figure></div></section>
+  <section id="rencana" class="section dark-section"><div class="container-site"><p class="eyebrow">Sebelum berangkat</p><h2>Jam masuk dan biaya perlu dikonfirmasi</h2><div class="cards"><article><h3>Jam dan akses</h3><p>Pada 20 Oktober 2026, listing Google Maps tidak menampilkan jam buka. Jangan memakai jam kafe di dalam kawasan sebagai jam seluruh atraksi. Pastikan hari buka, batas masuk, dan ketentuan akses pagi atau sore; tidak ada jaminan masuk sebelum fajar maupun setelah gelap.</p></article><article><h3>Tiket, parkir dan spot foto</h3><p>Harga terkini belum dikonfirmasi. Tanyakan biaya per orang atau kendaraan, parkir, serta wahana atau spot foto tambahan, termasuk bagian mana yang tercakup. Angka dari halaman lama bukan janji harga di loket.</p></article><article><h3>Cuaca dan pembatas</h3><p>Periksa prakiraan cuaca dan arahan petugas. Gunakan alas kaki dengan cengkeraman baik, bawa pelindung hujan dan kebutuhan pribadi. Hindari tepian dan struktur yang ditutup; hentikan kegiatan bila kondisi memburuk.</p></article></div></div></section>
+  <section id="transportasi" class="section"><div class="container-site"><p class="eyebrow">Perjalanan</p><h2>Pastikan tujuan dan perjalanan pulang</h2><p>Gunakan pin BIS, bukan hanya nama Simarjarunjung yang dapat merujuk pada kawasan lebih luas. Sebelum berangkat, cocokkan pintu masuk dan titik turun dengan petugas atau pengemudi. Petunjuk peta tidak membuktikan semua jalan dapat dilalui kendaraan Anda.</p><p>Rute bus, sambungan lokal, ketersediaan taksi, kondisi jalan, dan waktu tempuh belum diverifikasi dalam panduan ini. Bila menggunakan jasa transportasi, tanyakan rute yang akan dipakai, harga, waktu tunggu, serta pengaturan pulang. Persiapkan bahan bakar atau pengisian daya berdasarkan lokasi dan jam penyedia yang Anda cek sendiri.</p></div></section>
+  <section id="fasilitas" class="section pale-section"><div class="container-site"><p class="eyebrow">Kebutuhan kunjungan</p><h2>Tanyakan fasilitas sesuai kebutuhan Anda</h2><p>Toilet, parkir, makanan, tempat ibadah, pembayaran, sinyal, dan akses tanpa anak tangga belum dikonfirmasi kondisi operasionalnya. Jangan mengandalkan foto lama atau daftar fasilitas sebagai jaminan layanan hari ini.</p><p>Jika membawa anak, lansia, atau pengguna alat bantu mobilitas, tanyakan permukaan jalur, tangga, jarak dari titik turun, toilet yang dapat digunakan, dan bantuan yang tersedia sebelum melakukan perjalanan. Pastikan izin serta kondisi setiap struktur foto langsung dengan petugas.</p></div></section>
+  <section id="sekitar" class="section"><div class="container-site"><p class="eyebrow">Rencana sekitar</p><h2>Pisahkan kawasan, tempat usaha dan tiket</h2><p>Indonesia.travel membahas Simarjarunjung dalam konteks wisata Danau Toba. Tempat makan, penginapan, titik pandang lain, dan kunjungan ke Samosir perlu pemeriksaan lokasi, akses serta pemesanan masing-masing. Penyebutan kawasan tidak berarti jarak berjalan kaki, jalan penghubung terbuka, atau satu tiket berlaku bersama.</p><p>Pilih layanan berdasarkan kebutuhan dan informasi yang Anda konfirmasi langsung, termasuk harga, bahan makanan atau alergi, jam layanan, serta perjalanan pulang. Situs ini tidak menyediakan pemesanan atau merekomendasikan operator tertentu.</p></div></section>
+  <section id="peta" class="section pale-section"><div class="container-site"><p class="eyebrow">Orientasi</p><h2>Alamat dan peta Bukit Indah Simarjarunjung</h2><p>Butu Bayu Pane Raja, Dolok Pardamean, Kabupaten Simalungun, Sumatera Utara 21163. Pin Google Maps yang diperiksa 20 Oktober 2026: <strong>2.8137612, 98.781632</strong>. Pin bukan konfirmasi pintu masuk atau kelayakan seluruh rute.</p><a class="button" href="https://maps.app.goo.gl/jebnSVTqB8zqffgg7" rel="noopener noreferrer">Buka lokasi di Google Maps</a><p class="small">Peta dibuka di layanan pihak ketiga setelah tautan dipilih; tidak ada peta Google yang dimuat otomatis di halaman ini.</p></div></section>
+  <section id="faq" class="section"><div class="container-site"><p class="eyebrow">FAQ</p><h2>Pertanyaan sebelum berangkat</h2><div class="faq-list">{faq.map(([q,a])=><details><summary>{q}</summary><p>{a}</p></details>)}</div></div></section>
+  <section id="sumber" class="section pale-section"><div class="container-site"><h2>Sumber dan batas informasi</h2><p>Diperiksa 20 Oktober 2026. Panduan independen ini tidak mewakili pengelola. Jam, harga, layanan, kondisi jalan dan struktur foto memerlukan konfirmasi terpisah untuk hari kunjungan.</p><ul class="source-list"><li><a href="https://www.indonesia.travel/id/en/travel-ideas/adventure/finding-love-with-your-partner-at-these-back-to-nature-spots-in-north-sumatera">Indonesia.travel — Simarjarunjung dan alamat kawasan</a> (materi promosi, bukan pengumuman operasional terkini).</li><li><a href="https://maps.app.goo.gl/jebnSVTqB8zqffgg7">Google Maps — listing BIS</a> (snapshot pihak ketiga, 20 Oktober 2026).</li><li>Halaman sumber dan lisensi foto ditautkan pada masing-masing keterangan gambar; tanggal foto bukan tanggal pemeriksaan lokasi.</li></ul></div></section>
+ </main>
 </BaseLayout>
