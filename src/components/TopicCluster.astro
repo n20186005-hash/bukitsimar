@@ -1,0 +1,68 @@
+---
+import { TOPIC_GROUP_LABELS, TOPIC_GROUP_ORDER, topicsByGroup, type TopicGroup } from '../data/topics';
+
+// Hanya tampilkan sebagian topik unggulan di beranda (batch pertama + lainnya
+// di halaman topik lengkap). Urutan mengikuti TOPIC_GROUP_ORDER.
+const featuredSlugs = [
+  'tiket-masuk',
+  'jam-buka',
+  'fasilitas',
+  'spot-foto',
+  'lokasi-dan-peta',
+  'rute-dari-medan',
+  'cafe-view-danau-toba',
+  'bis-vs-panatapan',
+];
+
+function topicById(slug: string) {
+  for (const g of TOPIC_GROUP_ORDER) {
+    const found = topicsByGroup(g).find((t) => t.slug === slug);
+    if (found) return found;
+  }
+  return undefined;
+}
+
+const featured = featuredSlugs
+  .map((s) => topicById(s))
+  .filter((t): t is NonNullable<typeof t> => Boolean(t));
+
+const groups: { group: TopicGroup; label: string; topics: ReturnType<typeof topicsByGroup> }[] =
+  TOPIC_GROUP_ORDER.map((group) => ({
+    group,
+    label: TOPIC_GROUP_LABELS[group],
+    topics: topicsByGroup(group),
+  }));
+---
+
+<section id="topik" class="section topic-cluster">
+  <div class="container-site">
+    <p class="eyebrow">Panduan topik</p>
+    <h2>Jelajahi panduan lengkap</h2>
+    <p class="cluster-intro">
+      Lebih dari 40 panduan mandiri seputar Bukit Indah Simarjarunjung dan wisata Danau Toba di sekitarnya.
+      Pilih topik berdasarkan kebutuhan perjalanan Anda.
+    </p>
+
+    <div class="featured-grid">
+      {featured.map((t) => (
+        <a class="featured-card" href={`/${t.slug}/`}>
+          <span class="featured-group">{TOPIC_GROUP_LABELS[t.group]}</span>
+          <span class="featured-title">{t.content.h1}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="group-tabs">
+      {groups.map((g) => (
+        <details class="group-block">
+          <summary>{g.label} <span class="count">({g.topics.length})</span></summary>
+          <ul class="group-list">
+            {g.topics.map((t) => (
+              <li><a href={`/${t.slug}/`}>{t.content.h1}</a></li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -9,7 +9,14 @@ const SITE = 'https://bukitsimar.com';
 export default defineConfig({
   site: SITE,
   output: 'static',
-  integrations: SITE ? [sitemap({ filter: (page) => page === "https://bukitsimar.com/" })] : [],
+  integrations: SITE ? [sitemap({
+    filter: (page) =>
+      !page.endsWith('/privacy/') &&
+      !page.endsWith('/terms/') &&
+      !page.endsWith('/cookies/') &&
+      !page.endsWith('/404') &&
+      page !== 'https://bukitsimar.com/404',
+  })] : [],
   vite: {
     plugins: [tailwindcss()],
   },

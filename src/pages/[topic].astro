@@ -1,0 +1,20 @@
+---
+import TopicPage from '../components/TopicPage.astro';
+import { TOPICS, getTopic, type Topic } from '../data/topics';
+
+interface Props {
+  topic: Topic;
+}
+
+export function getStaticPaths() {
+  return TOPICS.filter((t) => t.ready).map((t) => ({
+    params: { topic: t.slug },
+    props: { topic: t },
+  }));
+}
+
+const { topic } = Astro.props;
+const t = getTopic(topic.slug);
+if (!t) return Astro.redirect('/404');
+---
+<TopicPage topic={t} />
